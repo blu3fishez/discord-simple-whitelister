@@ -1,99 +1,96 @@
-Discord Minecraft Bot
+# Simple Whitelister
 
-A Discord bot to manage your Minecraft server's whitelist directly from Discord using RCON.
+RCON을 사용하여 디스코드에서 직접 마인크래프트 서버의 화이트리스트를 관리하는 봇입니다.
 
-It is highly recommended to host this bot on the same machine as the Minecraft server for minimal latency. However, it can connect to any RCON host specified in the environment variables.
+낮은 지연 시간을 위해 이 봇을 마인크래프트 서버와 동일한 머신에서 호스팅하는 것을 권장합니다. 하지만, 환경 변수에 RCON 호스트를 지정하여 원격 서버에도 연결할 수 있습니다.
 
-✨ Features
+## 주요 기능
 
-Discord-based Whitelisting: Allows users to add their Minecraft nicknames to the server's whitelist by sending a message in a specific channel.
+- 디스코드 기반 화이트리스트: 사용자가 특정 채널에서 닉네임을 입력하여 서버 화이트리스트에 자신을 추가할 수 있습니다.
 
-Configurable Channels: Server administrators can set a specific channel for whitelist commands using a simple bot command. (Uses lowdb for storage).
+- 채널 설정 기능: 서버 관리자가 간단한 명령어로 화이트리스트 명령을 받을 특정 채널을 지정할 수 있습니다. (설정 저장은 lowdb 사용)
 
-RCON Integration: Securely communicates with the Minecraft server using the RCON protocol.
+- RCON 연동: RCON 프로토콜을 사용하여 마인크래프트 서버와 안전하게 통신합니다.
 
-Rate Limiting: Prevents spam by limiting whitelist requests (one per 5 seconds).
+- 간편한 설정: 주요 설정은 .env 파일을 통해 관리됩니다.
 
-Easy Configuration: Key settings are managed via environment variables.
+## 준비 사항
 
-⚙️ Prerequisites
+- Node.js (v18.x 이상 권장)
+- pnpm
+- RCON이 활성화된 실행 중인 마인크래프트 서버
 
-Node.js (v18.x or higher recommended)
+## 설치 및 설정
 
-pnpm
+1. 저장소 복제:
 
-A running Minecraft server with RCON enabled.
-
-🚀 Installation & Setup
-
-Clone the repository:
-
-git clone [https://github.com/](https://github.com/)<your-username>/discord-minecraft-bot.git
+```shell
+git clone https://github.com/blu3fishez/discord-simple-whitelister.git
 cd discord-minecraft-bot
+```
 
+2. pnpm을 사용하여 의존성 설치:
 
-Install dependencies using pnpm:
-
+```shell
 pnpm install
+```
 
+3. 환경 변수 설정. 프로젝트 루트에 .env 파일을 생성하고 필요한 값을 입력합니다.
 
-Configure environment variables. Create a .env file in the root of the project and fill in the required values.
+```
+DISCORD_TOKEN= # 봇 토큰
+CLIENT_ID= # 봇 ID
+GUILD_ID= # 서버 ID
 
-cp .env.example .env
+# 2. Minecraft RCON
+RCON_HOST= # localhost 추천
+RCON_PORT=
+RCON_PASSWORD=
 
+# 3. LowDB
+DB_PATH= # whitelist 채널정보를 저장할 데이터베이스 파일. db.json 추천
 
-🔧 Configuration (.env.example)
+LOGGER_NAME=# 로그에 나타나는 프로젝트 이름
+```
 
-# Discord Bot Configuration
-DISCORD_TOKEN="<your_discord_bot_token>"
+RCON 포트와 비밀번호는 마인크래프트 서버의 server.properties 파일에 설정된 값과 일치해야 합니다.
 
-# Minecraft RCON Configuration
-# (It's recommended to set RCON_HOST to "localhost" if bot is on the same machine)
-RCON_HOST="localhost"
-RCON_PORT="<your_rcon_port>"
-RCON_PASSWORD="<your_rcon_password>"
+## 명령어
 
+- `/set-whitelist-channel channel:`: (관리자 전용) 현재 채널을 화이트리스트 명령을 받는 유일한 채널로 설정합니다.
 
-Note: The RCON port and password must match the ones set in your Minecraft server's server.properties file.
+## 실행 방법
 
-💬 Commands
+### 개발 환경
 
-/set-channel: (Admin only) Sets the current channel as the only channel where whitelist commands are accepted.
+개발 모드로 봇을 실행합니다 (nodemon 등을 사용 시 자동 재시작):
 
-!whitelist <minecraft_username>: (In the set channel) Adds the specified Minecraft username to the server's whitelist.
-
-(Note: Please update the commands above to match your actual implementation.)
-
-▶️ Usage
-
-Development
-
-Run the bot for development (with auto-reloads if using nodemon or similar):
-
+```shell
 pnpm dev
+```
 
+### 프로덕션 (실제 서비스) 환경
 
-(You might need to add a dev script to your package.json)
+빌드 후에 빌드된 프로젝트를 실행하는 방식입니다.
 
-Production
-
-Run the bot for production:
-
+```shell
+pnpm build # 빌드시에만 필요
 pnpm start
+```
 
+더 안정적인 서비스 운영(자동 재시작, 모니터링)을 위해 pm2 사용을 권장합니다!
 
-For more robust production use (auto-restarts, monitoring), it is recommended to use pm2:
-
-# Start the bot with pm2
+```shell
+# pm2로 봇 시작
 pm2 start pnpm --name "discord-mc-bot" -- start
 
-# View logs
+# 로그 확인
 pm2 logs discord-mc-bot
 
-# Stop
+# 중지
 pm2 stop discord-mc-bot
+```
 
+## 라이선스
 
-📜 License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
+이 프로젝트는 MIT 라이선스를 따릅니다. 자세한 내용은 LICENSE 파일을 참고하세요.
