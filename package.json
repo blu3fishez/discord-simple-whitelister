@@ -1,0 +1,30 @@
+{
+  "name": "discord-minecraft-bot",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "deploy-command": "ts-node src/deploy/deploy-commands.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.17.1",
+  "dependencies": {
+    "discord.js": "^14.24.2",
+    "dotenv": "^17.2.3",
+    "lowdb": "^7.0.1",
+    "rcon-client": "^4.2.5",
+    "winston": "^3.18.3",
+    "winston-daily-rotate-file": "^5.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@types/node": "^24.9.2",
+    "eslint": "^9.39.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

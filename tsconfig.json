@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    /* 기본 옵션 */
+    "target": "ES2022",                // 컴파일될 JavaScript 버전
+    "module": "CommonJS",             // 모듈 시스템: CommonJS (require/exports)
+    "moduleResolution": "node",       // 모듈 해석 방식
+    "esModuleInterop": true,          // CommonJS 모듈을 ES 모듈처럼 가져올 수 있게 함
+    "forceConsistentCasingInFileNames": true,
+    /* 엄격한 타입 검사 */
+    "strict": true,
+    "skipLibCheck": true,
+
+    /* 컴파일 경로 */
+    "rootDir": "./src",               // TypeScript 소스 코드 루트
+    "outDir": "./dist"                // 컴파일된 JavaScript 파일이 저장될 경로
+  },
+  "include": ["src/**/*"] // 컴파일할 파일 범위
+}
